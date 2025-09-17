@@ -85,7 +85,7 @@ poetry install
 运行主程序
 
 ```bash
-poetry run python3 main.py
+#
 ```
 
 ### 🐋使用  Docker  构建项目
