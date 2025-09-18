@@ -1,7 +1,7 @@
 # 基本配置
 
 # 是否开启多会话模式
-multi_session: false
+multi_session: true
 # 是否开启姓名手机号打码
 mask_acc: false
 # TUI 最大显示高度 null: 自适应高度

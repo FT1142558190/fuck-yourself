@@ -10,7 +10,7 @@ repository = "https://github.com/SocialSisterYi/CxKitty"
 
 [[tool.poetry.source]]
 name = "tsinghua"
-url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+url = "https://mirrors.aliyun.com/pypi/simple/"
 priority = "default"
 
 
