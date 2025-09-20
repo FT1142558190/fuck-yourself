@@ -43,6 +43,8 @@ work:
   fallback_fuzzer: false
   # 作答失败后是否保存
   fallback_save: true
+  # 是否只导出题目
+  onlyexport: true
 
 # 文档
 document:

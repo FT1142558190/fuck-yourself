@@ -1,0 +1,4 @@
+# 忽略 temp 目录下的所有文件
+*
+# 但保留 .gitignore 文件本身（可选）
+!.gitignore

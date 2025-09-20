@@ -10,7 +10,7 @@
 
 本项目旨在研究学习爬虫技术和网络接口编程技术，同时致力于以开源方式抵制并消灭各种付费“刷课平台”和“黑产”
 
-<span style="color: red"><b>Ps: 本项目不提供任何题库资源，有相关测试需求者请按照文档自行解决。本项目仅供学习参考使用，请在下载部署后 24 小时内删除，由于使用本项目不当所造成的挂科或不良学习记录作者一概不负责。</b></span>
+`<span style="color: red"><b>`Ps: 本项目不提供任何题库资源，有相关测试需求者请按照文档自行解决。本项目仅供学习参考使用，请在下载部署后 24 小时内删除，由于使用本项目不当所造成的挂科或不良学习记录作者一概不负责。`</b>`
 
 ## ✨Features
 
@@ -37,7 +37,7 @@
   - ✅自动过滤题干和选项中的空白 Unicode 字符，eg：u+2002、u+200b、u+3000
   - ✅遇到匹配失败的题，可使用 fuzzer 方式填充答案并提交（默认关闭）
   - ✅章节测验试题 / 课程考试可完整导出，信息全、无加密无乱码，可导出临时保存的答案，现支持 json 格式
-  - ✅自动答题功能需要至少一种的 **题库后端** 支持，现支持`REST API`、`JSON`、`SQLite`三种类型的 **题库后端**，同时已适配`Enncy`、`网课小工具（Go题）`、`题库海`、`冷月题库`、`Muke题库`、`柠檬题库`六种第三方题库，可并行搜索，择优匹配答案（建议使用自建题库）
+  - ✅自动答题功能需要至少一种的 **题库后端** 支持，现支持 `REST API`、`JSON`、`SQLite`三种类型的 **题库后端**，同时已适配 `Enncy`、`网课小工具（Go题）`、`题库海`、`冷月题库`、`Muke题库`、`柠檬题库`六种第三方题库，可并行搜索，择优匹配答案（建议使用自建题库）
   - ✅`REST API`类型 **题库后端** （用户接口）支持使用 [JsonPath](https://goessner.net/articles/JsonPath/) 语法进行答案字段提取，允许用户注入 HTTP header 和 params 依赖字段
   - ✅日志中将记录未完成的题目，并自动导出未完成的题目到 json
 
@@ -60,7 +60,7 @@
 
 如果有能力一同开发项目，欢迎使用 [PR](https://github.com/SocialSisterYi/CxKitty/pulls) 提交代码（注意合并 Origin 和修改内容
 
-提交 Issue 时应当遵守 **[提问的智慧](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/main/README-zh_CN.md)** 以及[别像弱智一样提问](https://github.com/tangx/Stop-Ask-Questions-The-Stupid-Ways)，切勿以`不懂`、`萌新问个问题`、`小白啥也不会浇浇`、`整个xxx呗`作为标题，否则一律忽略
+提交 Issue 时应当遵守 **[提问的智慧](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/main/README-zh_CN.md)** 以及[别像弱智一样提问](https://github.com/tangx/Stop-Ask-Questions-The-Stupid-Ways)，切勿以 `不懂`、`萌新问个问题`、`小白啥也不会浇浇`、`整个xxx呗`作为标题，否则一律忽略
 
 [Issue](https://github.com/SocialSisterYi/CxKitty/issues) 为本项目的唯一反馈渠道，任何包括不限于在 QQ、B站私信、Telegram、微信 的提问一律忽略
 
@@ -129,7 +129,7 @@ docker build --tag socialsisteryi/cx-kitty .
 
 `/app/questions.db`sqlite题库 (根据配置文件修改，**如不需要可不映射**)
 
-由于程序使用 TUI，Docker 的日志服务会自动捕获并保存容器的 stdo，所以建议使用参数`--log-opt max-size=xx`限制容器的日志大小，以免造成过多的磁盘占用
+由于程序使用 TUI，Docker 的日志服务会自动捕获并保存容器的 stdo，所以建议使用参数 `--log-opt max-size=xx`限制容器的日志大小，以免造成过多的磁盘占用
 
 ```bash
 docker run -it \
@@ -144,6 +144,7 @@ docker run -it \
   --log-opt max-size=10m \
   socialsisteryi/cx-kitty
 ```
+
 ### ▶️可执行文件构建 (Windows/Linux/MacOS) (不建议使用)
 
 从[Action](https://github.com/SocialSisterYi/CxKitty/actions/workflows/package-exe.yml)中获取最新的自动构建文件,解压后执行文件
@@ -151,17 +152,16 @@ docker run -it \
 <details>
 <summary>详细步骤</summary>
 
-
 点击[Action](https://github.com/SocialSisterYi/CxKitty/actions/workflows/package-exe.yml)
 
-右侧点击`绿色的` `最上面`的名为`Package Executable`
+右侧点击 `绿色的` `最上面`的名为 `Package Executable`
 
 跳转后拖到最底下
 
 选择你自己的系统,点一下就会下载
 
 解压出来后,先配置配置文件,然后执行文件就可以正常启动了
- 
+
 </details>
 
 ## 🔨Configuration
@@ -174,21 +174,21 @@ docker run -it \
 
 ### 人脸识别配置
 
-人脸识别图片要求必须 .jpg 格式，存放于`face_image_path`配置的路径下，默认为`faces/`
+人脸识别图片要求必须 .jpg 格式，存放于 `face_image_path`配置的路径下，默认为 `faces/`
 
-若`fetch_uploaded_face`字段为`true`，在登录成功后立即尝试拉取该用户预先上传的人脸图片，成功后以用户 puid 命名（eg：`114514.jpg`），存放于`face_image_path`配置的路径下，以备需要识别时读取
+若 `fetch_uploaded_face`字段为 `true`，在登录成功后立即尝试拉取该用户预先上传的人脸图片，成功后以用户 puid 命名（eg：`114514.jpg`），存放于 `face_image_path`配置的路径下，以备需要识别时读取
 
-人脸识别图片还可以自定义，要求图片文件名以 puid 命名，存放于`face_image_path`配置的路径下，但需要注意将`fetch_uploaded_face`设置为`false`，否则登录成功后会被覆盖
+人脸识别图片还可以自定义，要求图片文件名以 puid 命名，存放于 `face_image_path`配置的路径下，但需要注意将 `fetch_uploaded_face`设置为 `false`，否则登录成功后会被覆盖
 
-也可以为每个自定义一组多张人脸图片，图片以 puid+序号 命名（eg：`114514_1.jpg`、`114514_2.jpg`），程序中使用正则`/\d+(_d+)?\.jpg/`遍历筛选，需要识别人脸时会从这组图片中随机抽取一张并上传
+也可以为每个自定义一组多张人脸图片，图片以 puid+序号 命名（eg：`114514_1.jpg`、`114514_2.jpg`），程序中使用正则 `/\d+(_d+)?\.jpg/`遍历筛选，需要识别人脸时会从这组图片中随机抽取一张并上传
 
 ### 题库配置
 
-单选题问题与答案应当一一对应，多选题使用`#`或`;`分隔每个选项，判断题答案只能为`对`、`错`、`正确`、`错误`、`√`、`×`
+单选题问题与答案应当一一对应，多选题使用 `#`或 `;`分隔每个选项，判断题答案只能为 `对`、`错`、`正确`、`错误`、`√`、`×`
 
-REST API 搜题接口配置，确保接口`searcher->restApiSearcher->url`可以正确访问访问（若使用 Docker 搭建，而题库 API 服务在宿主机运行，应使用宿主机虚拟网关 IP 地址而不是本地回环地址）
+REST API 搜题接口配置，确保接口 `searcher->restApiSearcher->url`可以正确访问访问（若使用 Docker 搭建，而题库 API 服务在宿主机运行，应使用宿主机虚拟网关 IP 地址而不是本地回环地址）
 
-返回值必须为 JSON 格式，使用`rsp_field`字段作为选择器传入，使用 [JsonPath](https://goessner.net/articles/JsonPath/) 语法编写，如`$.data`或`$.data.answer[*]`等
+返回值必须为 JSON 格式，使用 `rsp_field`字段作为选择器传入，使用 [JsonPath](https://goessner.net/articles/JsonPath/) 语法编写，如 `$.data`或 `$.data.answer[*]`等
 
 eg：
 
@@ -206,7 +206,7 @@ curl 'http://127.0.0.1:88/v1/cx' \
 }
 ```
 
-JSON 题库，确保`searcher->jsonFileSearcher->file_path`可以访问（使用 Docker 需要设置映射），key 为题目，value 为与之对应的答案
+JSON 题库，确保 `searcher->jsonFileSearcher->file_path`可以访问（使用 Docker 需要设置映射），key 为题目，value 为与之对应的答案
 
 eg：
 
@@ -216,7 +216,7 @@ eg：
 }
 ```
 
-SQLite 题库，确保`searcher->sqliteSearcher->file_path`可以访问（使用 Docker 需要设置映射），表中应存在配置的请求和响应字段
+SQLite 题库，确保 `searcher->sqliteSearcher->file_path`可以访问（使用 Docker 需要设置映射），表中应存在配置的请求和响应字段
 
 eg：
 
@@ -256,7 +256,7 @@ Enncy 题库，使用前请注册并获取 Token 填写在配置文件中（第�
 
 ![](imgs/demo1.png)
 
-按照提示选择目标课程，多个课程之间使用`,`分隔，使用**课程选择器语法**，如下：
+按照提示选择目标课程，多个课程之间使用 `,`分隔，使用**课程选择器语法**，如下：
 
 - 课程序号：`0`、`1`、`2`
 - 课程序号范围：`0-3`、`5-10`
@@ -269,25 +269,25 @@ Enncy 题库，使用前请注册并获取 Token 填写在配置文件中（第�
 
 ![](imgs/demo3.png)
 
-如需要完成课程`0`、课程`1-3`、课程`解析几何`则输入：`0,1-3,"解析几何"`
+如需要完成课程 `0`、课程 `1-3`、课程 `解析几何`则输入：`0,1-3,"解析几何"`
 
-如需进入**考试模式**，那么需要在指定课程（使用**课程选择器语法**）前输入`EXAM|`，即可进入二级菜单，如：
+如需进入**考试模式**，那么需要在指定课程（使用**课程选择器语法**）前输入 `EXAM|`，即可进入二级菜单，如：
 
 `EXAM|0`、`EXAM|"解析几何"`等
 
-若配置文件的`exam->confirm_submit`为`true`那么在交卷前会提示确认，否则将自动交卷
+若配置文件的 `exam->confirm_submit`为 `true`那么在交卷前会提示确认，否则将自动交卷
 
-如需导出题库到 export 路径，需在考试选择界面输入`e`+序号
+如需导出题库到 export 路径，需在考试选择界面输入 `e`+序号
 
 ![](imgs/demo4.png)
 
 ## 💡About Repo Name
 
-项目的中文名`超星学习通答题姬`早已确定，英文名想到过`CxHime`、`CxExamHime`、`CxCourseHime`然而都非常拗口，故弃用
+项目的中文名 `超星学习通答题姬`早已确定，英文名想到过 `CxHime`、`CxExamHime`、`CxCourseHime`然而都非常拗口，故弃用
 
-又想到`CxHelper`这个名，但`helper`一词易使人联想到木马病毒可执行程序的文件名，很不吉利
+又想到 `CxHelper`这个名，但 `helper`一词易使人联想到木马病毒可执行程序的文件名，很不吉利
 
-最后由`CxKit`衍生出`CxKitty`这个名，一语双关`kitty`自有“猫娘”含义，~~同时由于项目首字母缩写是`cxk`，亦可解释为`答题只因`~~
+最后由 `CxKit`衍生出 `CxKitty`这个名，一语双关 `kitty`自有“猫娘”含义，~~同时由于项目首字母缩写是 `cxk`，亦可解释为 `答题只因`~~
 
 ## ⚠️Disclaimers
 
@@ -315,8 +315,6 @@ Enncy 题库，使用前请注册并获取 Token 填写在配置文件中（第�
 
 [CodFrm/cxmooc-tools: 一个 超星(学习通)/智慧树(知到)/中国大学mooc 学习工具,火狐,谷歌,油猴支持.全自动任务,视频倍速秒过,作业考试题库,验证码自动打码(੧ᐛ੭挂科模式,启动) (github.com)](https://github.com/CodFrm/cxmooc-tools)
 
-
-
 ### 今天的工作有没有实质性的进展吗
 
 深入理解了git的图新化工具
@@ -324,10 +322,10 @@ Enncy 题库，使用前请注册并获取 Token 填写在配置文件中（第�
 开始研究报错
 
 2025-09-17 21:18:02,804 [PointWork] DEBUG -> 题目 list: [{'id': 405162022, 'value': '毛泽东在（）中提出“党风”概念，明确将学风、文风纳入党风范畴。', 'type': 0, 'options': {'A': '《国民革命与农民运动》', 'B': '《反对本本主义》', 'C': '《整顿党的作风》', 'D': '《改造我们的学习》'}, 'answer': None}, {'id': 405162019, 'value': '\u200c恩格斯在总结巴黎公社经验\u200c时强调，公职人员应成为“社会的负责任的勤务员”，以“光明正大的工作态度”取代（）作风。', 'type': 0, 'options': {'A': '教条主义', 'B': '官僚主义', 'C': '形式主义', 'D': '宗派主义'}, 'answer': None}, {'id': 405162027, 'value': '\u200c1945年，党的七大提出“两个务必”，告诫全党“夺取全国胜利只是万里长征走完第一步”，为长期执政条件下的作风建设奠定思想基础。', 'type': 3, 'options': None, 'answer': None}, {'id': 405162026, 'value': '党的十七届四中全会提出，大兴（）之风，推动作风建设向基层延伸。', 'type': 1, 'options': {'A': '密切联系群众', 'B': '求真务实', 'C': '艰苦奋斗', 'D': '批评与自我批评'}, 'answer': None}, {'id': 405162024, 'value': '加强党的作风建设的理论继承了中华优秀传统文化关于作风建设的论述，包括（）。', 'type': 1, 'options': {'A': '\u200c民本思想与宗旨意识的千年传承', 'B': '\u200c修身立德与政治品格的浸润滋养', 'C': '廉政传统与权力规范的古今对话', 'D': '知行合一与实践导向的方法论赓续'}, 'answer': None}]
-2025-09-17 21:18:02,894 [Main] ERROR -> 
+2025-09-17 21:18:02,894 [Main] ERROR ->
 -----*程序运行异常退出*-----
 Traceback (most recent call last):
-  File "F:\codenew\CxKitty\main.py", line 372, in <module>
+  File "F:\codenew\CxKitty\main.py", line 372, in `<module>`
     fuck_task_worker(task_obj)
   File "F:\codenew\CxKitty\main.py", line 205, in fuck_task_worker
     resolver = QuestionResolver(
@@ -338,3 +336,30 @@ Traceback (most recent call last):
 TypeError: 'NoneType' object is not iterable
 
 找到报错了 题目拿出来了但是没有解析器所以报错了我要跳过这个代码
+
+尝试修改出现第二次错误
+
+╭─────────────────────────────── Traceback (most recent call last) ────────────────────────────────╮
+│ f:\codenew\CxKitty\main.py:374 in `<module>`                                                       │
+│                                                                                                  │
+│   371 │   │   for task_obj in ClassSelector(command, classes):                                   │
+│   372 │   │   │   # 章节容器 执行章节任务                                                        │
+│   373 │   │   │   if isinstance(task_obj, ChapterContainer):                                     │
+│ ❱ 374 │   │   │   │   fuck_task_worker(task_obj)                                                 │
+│   375 │   │   │                                                                                  │
+│   376 │   │   │   # 考试对象 执行考试任务                                                        │
+│   377 │   │   │   elif isinstance(task_obj, ExamDto):                                            │
+│                                                                                                  │
+│ f:\codenew\CxKitty\main.py:196 in fuck_task_worker                                               │
+│                                                                                                  │
+│   193 │   │   │   │   │   │   │   task_point.parse_attachment()                                  │
+│   194 │   │   │   │   │   │   │   # 保存 json 文件                                               │
+│   195 │   │   │   │   │   │   │   task_point.export(                                             │
+│ ❱ 196 │   │   │   │   │   │   │   │   config.EXPORT_PATH / f"work_{task_point.work_id}_{task_p   │
+│   197 │   │   │   │   │   │   │   )                                                              │
+│   198 │   │   │   │   │   │   │   task_wait(lay_left, config.WORK_WAIT, f"试题《{task_point.ti   │
+│   199 │   │   │   │   │   │   #if config.WORK_EN and config.WORK["onlyexport"] is True           │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+AttributeError: 'PointWorkDto' object has no attribute 'title'
+
+0 :单选题 1：多选题3：判断题

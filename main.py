@@ -193,13 +193,16 @@ def fuck_task_worker(chap: ChapterContainer):
                             task_point.parse_attachment()
                             # 保存 json 文件
                             task_point.export(
-                                config.EXPORT_PATH / f"work_{task_point.work_id}.json"
+                                #config.EXPORT_PATH / f"work_{task_point.work_id}_{task_point.title}.json"
+                                config.EXPORT_PATH / f"work_{task_point.work_id}.json"                                
                             )
-
+                            task_wait(lay_left, config.WORK_WAIT, f"试题《{task_point.title}》已结束")
+                        #if config.WORK_EN and config.WORK["onlyexport"] is True
                         # 完成章节测验
-                        if config.WORK_EN:
+                        if config.WORK_EN and not config.WORK.get("onlyexport", False):
+                        #if config.WORK_EN:
                             if not task_point.parse_attachment():
-                                continue
+                                continue0
                             task_point.fetch_all()
                             # 实例化解决器
                             resolver = QuestionResolver(
