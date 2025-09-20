@@ -45,6 +45,8 @@ work:
   fallback_save: true
   # 是否只导出题目
   onlyexport: true
+  # 备份拉取题目模式
+  buckup: true  
 
 # 文档
 document:

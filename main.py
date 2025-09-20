@@ -150,7 +150,42 @@ def fuck_task_worker(chap: ChapterContainer):
         # 遍历章节列表
         for index in range(len(chap)):
             _show_chapter(index)
-            if chap.is_finished(index) and config.WORK["export"] is False:  # 如果该章节所有任务点做完, 那么就跳过
+            if config.WORK["buckup"] is True:
+                for task_point in chap[index]:
+                                # 拉取任务卡片 Attachment
+                                try:
+                                    task_point.fetch_attachment()
+                                except ChapterNotOpened:
+                                    if refresh_flag:
+                                        chap.refresh_chapter(index-1)
+                                        refresh_flag = False
+                                        continue
+                                    else:
+                                        lay_left.unsplit()
+                                        lay_left.update(
+                                            Panel(
+                                                Align.center(
+                                                    f"[red]章节【{chap.chapters[index].label}】《{chap.chapters[index].name}》未开放\n程序无法继续执行！",
+                                                    vertical="middle",
+                                                ),
+                                                border_style="red",
+                                            )
+                                        )
+                                        logger.error("\n-----*未开放章节, 程序异常退出*-----")
+                                        sys.exit()
+                                refresh_flag = True
+                                try:
+                                    # 导出章节实体 带答案
+                                    if isinstance(task_point, PointWorkDto):
+                                       task_point.parse_attachment()
+                                       task_point.export(config.EXPORT_PATH / f"work_{task_point.work_id}.json"                                
+                            )
+                                       task_wait(lay_left, config.WORK_WAIT, f"试题《{task_point.title}》已结束")
+                                    else:
+                                        break
+                                except (TaskPointError, NotImplementedError) as e:
+                                    logger.error(f"任务点自动接管执行异常 -> {e.__class__.__name__} {e.__str__()}")
+            elif chap.is_finished(index) and config.WORK["export"] is False :  # 如果该章节所有任务点做完, 那么就跳过
                 logger.info(
                     f"忽略完成任务点 "
                     f"[{chap.chapters[index].label}:{chap.chapters[index].name}(Id.{chap.chapters[index].chapter_id})]"
@@ -159,104 +194,104 @@ def fuck_task_worker(chap: ChapterContainer):
                 continue
             refresh_flag = True
             # 获取当前章节的所有任务点, 并遍历
-            for task_point in chap[index]:
-                # 拉取任务卡片 Attachment
-                try:
-                    task_point.fetch_attachment()
-                except ChapterNotOpened:
-                    if refresh_flag:
-                        chap.refresh_chapter(index-1)
-                        refresh_flag = False
-                        continue
-                    else:
-                        lay_left.unsplit()
-                        lay_left.update(
-                            Panel(
-                                Align.center(
-                                    f"[red]章节【{chap.chapters[index].label}】《{chap.chapters[index].name}》未开放\n程序无法继续执行！",
-                                    vertical="middle",
-                                ),
-                                border_style="red",
+            if config.WORK["buckup"] is False:
+                for task_point in chap[index]:
+                    # 拉取任务卡片 Attachment
+                    try:
+                        task_point.fetch_attachment()
+                    except ChapterNotOpened:
+                        if refresh_flag:
+                            chap.refresh_chapter(index-1)
+                            refresh_flag = False
+                            continue
+                        else:
+                            lay_left.unsplit()
+                            lay_left.update(
+                                Panel(
+                                    Align.center(
+                                        f"[red]章节【{chap.chapters[index].label}】《{chap.chapters[index].name}》未开放\n程序无法继续执行！",
+                                        vertical="middle",
+                                    ),
+                                    border_style="red",
+                                )
                             )
-                        )
-                        logger.error("\n-----*未开放章节, 程序异常退出*-----")
-                        sys.exit()
-                refresh_flag = True
-                try:
-                    # 开始分类讨论任务点类型
-                    # 章节测验类型
-                    if isinstance(task_point, PointWorkDto) and (
-                        config.WORK_EN or config.WORK["export"] is True
-                    ):
-                        # 导出作业试题
-                        if config.WORK["export"] is True:
-                            task_point.parse_attachment()
-                            # 保存 json 文件
-                            task_point.export(
-                                #config.EXPORT_PATH / f"work_{task_point.work_id}_{task_point.title}.json"
-                                config.EXPORT_PATH / f"work_{task_point.work_id}.json"                                
-                            )
-                            task_wait(lay_left, config.WORK_WAIT, f"试题《{task_point.title}》已结束")
-                        #if config.WORK_EN and config.WORK["onlyexport"] is True
-                        # 完成章节测验
-                        if config.WORK_EN and not config.WORK.get("onlyexport", False):
-                        #if config.WORK_EN:
+                            logger.error("\n-----*未开放章节, 程序异常退出*-----")
+                            sys.exit()
+                    refresh_flag = True
+                    try:
+                        # 开始分类讨论任务点类型
+                        # 章节测验类型
+                        if isinstance(task_point, PointWorkDto) and (
+                            config.WORK_EN or config.WORK["export"] is True
+                        ):
+                            # 导出作业试题
+                            if config.WORK["export"] is True:
+                                task_point.parse_attachment()
+                                # 保存 json 文件
+                                task_point.export(
+                                    config.EXPORT_PATH / f"work_{task_point.work_id}.json"                                
+                                )
+                                task_wait(lay_left, config.WORK_WAIT, f"试题《{task_point.title}》已结束")
+
+                            # 完成章节测验
+                            if config.WORK_EN and not config.WORK.get("onlyexport", False):
+
+                                if not task_point.parse_attachment():
+                                    continue
+                                task_point.fetch_all()
+                                # 实例化解决器
+                                resolver = QuestionResolver(
+                                    exam_dto=task_point,
+                                    fallback_save=config.WORK["fallback_save"],
+                                    fallback_fuzzer=config.WORK["fallback_fuzzer"],
+                                )
+                                # 传递 TUI ctx
+                                lay_left.update(resolver)
+                                # 开始执行自动接管
+                                resolver.execute()
+                                # 开始等待
+                                task_wait(lay_left, config.WORK_WAIT, f"试题《{task_point.title}》已结束")
+
+                        # 视频类型
+                        elif isinstance(task_point, PointVideoDto) and config.VIDEO_EN:
                             if not task_point.parse_attachment():
-                                continue0
-                            task_point.fetch_all()
+                                continue
+                            # 拉取取任务点数据
+                            if not task_point.fetch():
+                                continue
                             # 实例化解决器
-                            resolver = QuestionResolver(
-                                exam_dto=task_point,
-                                fallback_save=config.WORK["fallback_save"],
-                                fallback_fuzzer=config.WORK["fallback_fuzzer"],
+                            resolver = MediaPlayResolver(
+                                media_dto=task_point,
+                                speed=config.VIDEO["speed"],
+                                report_rate=config.VIDEO["report_rate"],
                             )
                             # 传递 TUI ctx
                             lay_left.update(resolver)
                             # 开始执行自动接管
                             resolver.execute()
                             # 开始等待
-                            task_wait(lay_left, config.WORK_WAIT, f"试题《{task_point.title}》已结束")
+                            task_wait(lay_left, config.VIDEO_WAIT, f"视频《{task_point.title}》已结束")
 
-                    # 视频类型
-                    elif isinstance(task_point, PointVideoDto) and config.VIDEO_EN:
-                        if not task_point.parse_attachment():
-                            continue
-                        # 拉取取任务点数据
-                        if not task_point.fetch():
-                            continue
-                        # 实例化解决器
-                        resolver = MediaPlayResolver(
-                            media_dto=task_point,
-                            speed=config.VIDEO["speed"],
-                            report_rate=config.VIDEO["report_rate"],
-                        )
-                        # 传递 TUI ctx
-                        lay_left.update(resolver)
-                        # 开始执行自动接管
-                        resolver.execute()
-                        # 开始等待
-                        task_wait(lay_left, config.VIDEO_WAIT, f"视频《{task_point.title}》已结束")
+                        # 文档类型
+                        elif isinstance(task_point, PointDocumentDto) and config.DOCUMENT_EN:
+                            if not task_point.parse_attachment():
+                                continue
+                            # 实例化解决器
+                            resolver = DocumetResolver(document_dto=task_point)
+                            # 传递 TUI ctx
+                            lay_left.update(resolver)
+                            # 开始执行自动接管
+                            resolver.execute()
 
-                    # 文档类型
-                    elif isinstance(task_point, PointDocumentDto) and config.DOCUMENT_EN:
-                        if not task_point.parse_attachment():
-                            continue
-                        # 实例化解决器
-                        resolver = DocumetResolver(document_dto=task_point)
-                        # 传递 TUI ctx
-                        lay_left.update(resolver)
-                        # 开始执行自动接管
-                        resolver.execute()
+                            # 开始等待
+                            task_wait(lay_left, config.DOCUMENT_WAIT, f"文档《{task_point.title}》已结束")
 
-                        # 开始等待
-                        task_wait(lay_left, config.DOCUMENT_WAIT, f"文档《{task_point.title}》已结束")
+                    except (TaskPointError, NotImplementedError) as e:
+                        logger.error(f"任务点自动接管执行异常 -> {e.__class__.__name__} {e.__str__()}")
 
-                except (TaskPointError, NotImplementedError) as e:
-                    logger.error(f"任务点自动接管执行异常 -> {e.__class__.__name__} {e.__str__()}")
-
-                # 刷新章节任务点状态
-                chap.fetch_point_status()
-                _show_chapter(index)
+                    # 刷新章节任务点状态
+                    chap.fetch_point_status()
+                    _show_chapter(index)
 
         lay_left.unsplit()
         lay_left.update(
